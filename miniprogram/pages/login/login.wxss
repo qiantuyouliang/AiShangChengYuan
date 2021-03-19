@@ -1,0 +1,25 @@
+/* pages/login/login.wxss */
+
+.Container{
+  padding:0rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.Container .LogoGroup{
+  margin-top: 100rpx;
+}
+.Container .Tips{
+  font-size: 36rpx;
+  color: #929292;
+}
+.LogoGroup .LogoPic{
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 50%;
+}
+.Container button{
+  width: 100%;
+  margin-top: 26rpx;
+}

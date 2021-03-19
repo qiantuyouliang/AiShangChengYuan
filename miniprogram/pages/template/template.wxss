@@ -1,0 +1,74 @@
+/* miniprogram/pages/template/template.wxss */
+
+.FieldLable{
+  width: 100%;
+  height: 130rpx;
+  display: flex;
+  justify-content: space-evenly;
+  box-sizing: border-box;
+  margin-bottom:20rpx ;
+}
+
+
+.FieldLable .FieldLableItem{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.Icon{
+  width: 90rpx;
+  height: 90rpx;
+  border: 2rpx;
+
+}
+
+.IconText{
+  font-size: 24rpx;
+  text-align: center;
+}
+
+
+
+
+/********** templates Tabbar.wxss *******/
+.tabBar{
+  width:756rpx;
+  position: fixed;
+  bottom:0;
+  height: 92rpx;
+  margin-left:-4rpx;
+  background:rgb(255, 255, 255);
+  font-size:20rpx;
+  color:#8A8A8A;
+  display: flex;
+  justify-content: space-evenly;
+  box-shadow: 6rpx 6rpx 6rpx 6rpx #aaa;
+}
+
+ .tabBar-item{
+   margin-top: 6rpx;
+  width:25%;
+  text-align: center;
+}
+
+.TabbarIcon{
+  width: 54rpx;
+  height: 54rpx;
+}
+/*当前字体颜色*/
+.tabBartext{
+  color:#8A8A8A;
+}
+
+/********** template item_list.wxss *******/
+.loading{
+  border: none;
+  font-size: 28rpx;
+  color: #ccc;
+ 
+}
+
+.loading::after{
+  border: none
+}

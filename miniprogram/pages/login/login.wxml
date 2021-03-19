@@ -1,0 +1,9 @@
+<!--pages/login/login.wxml-->
+<view class="Container">
+  <view class="LogoGroup">
+    <image class="LogoPic" src="../../images/TestPic/UserHeader.jpeg"></image>
+  </view>
+  <view class="Tips">授权后才可以使用后续功能哦...</view>
+  <button type="primary" open-type="getUserInfo"  bind:getuserinfo="OnGetUserInfo">授权</button>
+  <button type="default">返回</button>
+</view>

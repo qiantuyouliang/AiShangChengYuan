@@ -1,0 +1,35 @@
+<!--pages/SecondHandDetail/SecondHandDetail.wxml-->
+<view class="Container">
+    <scroll-view class="ForumContent" enable-flex="true" scroll-y="true" style="height:1100rpx">
+      <view class="ForumTitle">{{Forum.Title}}</view>
+      <view class="ForumCreatorInfo">
+        <view class="Avatar">
+          <image src="{{Forum.avatarUrl}}"></image>
+        </view>
+        <view class="forum-creator-name">{{Forum.nickName}}</view>
+        <view class="Author">发布</view>
+      </view>
+      <view class="ForumContent">
+        <view class="Price">¥{{Forum.Price}}</view>
+        <view class="ForumTxt">{{Forum.Content}}</view>
+        <view class="ForumImage"  wx:for="{{ImageArry}}">
+          <image src="{{item}}" mode="widthFix"></image>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="BottomGroup">
+      <view class="BottomList">
+          <view class="BottomIcon">
+            <image src="../../images/IconLable/like.png"></image>
+            <text>点赞</text>
+          </view>
+          <view class="ContactCreator" bindtap="ContactCreator">
+            联系他/她
+          </view>
+          <view class="BottomIcon">
+            <image src="../../images/TestPic/share.png"></image>
+            <text>分享</text>
+          </view>
+      </view>  
+    </view>
+</view>

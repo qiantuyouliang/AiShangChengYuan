@@ -1,0 +1,5 @@
+/* components/LoadingMore/LoadingMore.wxss */
+.loading-btn{
+  font-size: 30rpx;
+  color: #a7a4a4;  
+}

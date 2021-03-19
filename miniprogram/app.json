@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/SecondHandMarket/SecondHandMarket",
+    "pages/ForumDetail/ForumDetail",
+    "pages/Square/Square", 
+    "pages/CreateForum/CreateForum",
+    "pages/login/login",
+    "pages/PhoneBook/PhoneBook",
+    "pages/template/template",
+    "pages/Messages/Messages",
+    "pages/me/me"
+
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "爱上诚园",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#8a8a8a",
+    "selectedColor": "#1296db",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tabBar/home1.png",
+        "selectedIconPath": "images/tabBar/home1_selected.png"
+      },
+      {
+        "pagePath": "pages/CreateForum/CreateForum",
+        "text": "发布",
+        "iconPath": "images/tabBar/create.png",
+        "selectedIconPath": "images/tabBar/create_selected.png"
+      },
+      {
+        "pagePath": "pages/Messages/Messages",
+        "text": "消息",
+        "iconPath": "images/tabBar/message.png",
+        "selectedIconPath": "images/tabBar/message_selected.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "images/tabBar/me.png",
+        "selectedIconPath": "images/tabBar/me_selected.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

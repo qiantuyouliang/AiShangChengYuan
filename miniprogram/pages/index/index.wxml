@@ -1,0 +1,25 @@
+<!--index.wxml-->
+<view class="container">
+
+<!--**** 滚动栏****-->
+  <view class= "swiper">
+    <swiper class='item-image' autoplay indicator-dots indicator-color="grey" indicator-active-color="#fff" sytle='width:{{width*2}}rpx; height:{{height*2}}rpx'>
+      <swiper-item>
+      <image src="../../images/swiper-view/spring.jpg"></image>
+      </swiper-item>
+      <swiper-item>
+      <image src="../../images/swiper-view/summer.jpg"></image>
+      </swiper-item>
+      <swiper-item>
+      <image src="../../images/swiper-view/autumn.jpg"></image>
+      </swiper-item>
+      <swiper-item>
+      <image src="../../images/swiper-view/winter.jpg"></image>
+      </swiper-item>
+    </swiper>
+  </view>
+
+<!--*************** 版块图标栏********************-->
+<import src= "../template/template.wxml" />
+<template is ="FieldLable"></template>
+</view>

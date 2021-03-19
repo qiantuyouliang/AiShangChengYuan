@@ -1,0 +1,2 @@
+<!--miniprogram/pages/Messages/Messages.wxml-->
+<view class="Container">即时通信页面</view>

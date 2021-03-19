@@ -1,0 +1,36 @@
+<!--pages/Square/Square.wxml-->
+<import src= "../template/template.wxml" />
+<template is ="FieldLable"></template>
+<view class="Forums_container" style="width:100%;background-color: rgb(210, 221, 210);border-radius: 40rpx; padding: 10rpx 0rpx;">
+    <view class="searchGroup">
+      <icon type="search" class="searchIcon" size="40rpx"></icon>
+      <input class="searchInput" placeholder="搜索" value="{{value}}"></input>
+      <icon type="clear" class="clearIcon" size="40rpx" bind:tap="onClearEvent"></icon>
+    </view>
+    <view class="ForumsList"  >
+        <view class="ForumSummary" wx:for="{{Forums}}"   url="../ForumDetail/ForumDetail?Title={{item.ForumTitle}}&Content={{item.ForumContent}}&nickName={{item.ForumAuthor}}&Images={{item.Images}}" hover-class="none">
+          <view class="ForumDetail-Text" >
+              <view class="ForumTitle">{{item.ForumTitle}}</view>
+              <view class="ForumRelative">
+                    <view class="CreatorInfo">
+                      <image src="../../images/TestPic/UserHeader.jpeg"></image>
+                      <text class="nickName">{{item.ForumAuthor}}</text>
+                    </view>
+                    <view class="ViewsNub">
+                      <image src="../../images/IconLable/Saw.png"></image>
+                      <text>98</text>
+                    </view>
+                    <view class="CommentsNub">
+                      <image src="../../images/IconLable/comment.png"></image>
+                      <text>21</text>
+                    </view>
+              </view>
+          </view>
+          <view class="ForumDetail-Image">
+              <image src="../../images/TestPic/wuye.jpg" mode="aspectFill"></image>
+          </view>
+        </view>
+        <LoadingMore hasmore="{{hasmore}}"></LoadingMore>
+    </view>
+  </view>
+  <template is ="tabBar"></template>

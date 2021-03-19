@@ -1,0 +1,115 @@
+/* miniprogram/pages/SecondHandMarket/SecondHandMarket.wxss */
+/********** searchGroup.wxss *******/
+.Container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+ .Bannar image{
+  width: 100%;
+  height:200rpx;
+}
+.searchGroup{
+  width: 80%;
+  height: 70rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 20rpx;
+  margin: 10rpx auto;
+  padding: 2rpx 5rpx;
+  background-color: #ffff;
+  }
+  
+.searchIcon{
+  flex-basis: 40rpx
+ }
+
+.searchInput{
+min-height: 52rpx;
+height: 52rpx;
+font-size: 28rpx;
+flex: 1
+}
+  
+.clearIcon{
+flex-basis: 40rpx
+}
+
+/*        *帖子模块*     */
+.ForumsContainer{
+  width:100%;
+  /* background-color: rgb(210, 221, 210); 
+  border-radius: 40rpx;  */
+  padding: 10rpx 0rpx;
+}
+.forums-group{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16rpx 26rpx 0rpx 26rpx ;
+  display: flex;
+  justify-content: space-around;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+.forums-group .forum{
+  width: 300rpx;
+  padding: 10rpx;
+
+
+}
+.forum .goodsInfo{
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.forum .forumInfo{
+  display: flex;
+  justify-content: space-between;
+  padding: 4rpx 8rpx 8rpx 8rpx;
+  align-items: center;
+}
+
+.forum .ForumMainImage{
+  margin-top: 24rpx;
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: 15rpx;
+}
+.forum .goodsInfo{
+  font-family: 'SimHei';
+}
+.forumInfo{
+  margin-top: 10rpx;
+  display: flex;
+  justify-content: space-around;
+}
+.price{
+  font-size: 24rpx;
+  font-weight: 700;
+  color: red;
+}
+.forumInfo .ViewNub{
+  font-size: 16rpx;
+  color: #656565;
+  font-weight: 300;
+}
+.CreateInfo{
+  display: flex;
+  padding:5rpx ;
+  justify-content: center;
+  align-items: center;
+}
+
+.CreateInfo image{
+  width: 34rpx;
+  height: 34rpx;
+  border-radius: 50%;
+}
+
+.CreateInfo text{
+  font-size: 20rpx;
+  color: #656565;
+  font-weight: 500;
+  margin-right :6rpx; 
+}

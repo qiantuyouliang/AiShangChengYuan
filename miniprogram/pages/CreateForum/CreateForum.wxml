@@ -1,0 +1,19 @@
+<!--miniprogram/pages/CreateForum/CreateForum.wxml-->
+<view class="Container">
+  <form bindsubmit='OnSubmitEvent'>
+    <textarea name="Title" class="Title" placeholder="请输入标题"></textarea>
+    <textarea name="Price" class="Price" placeholder="输入价格¥"></textarea>
+    <textarea name="Content" class="Content" placeholder="请输入详细描述"></textarea>
+    <view class="ImageGroupList">
+      <view wx:for="{{TempImages}}" class="ImageGroup" style="width:{{imageSize}}px;height:{{imageSize}}px">
+        <image src='{{item}}' bindtap="OnImagePreview" data-index="{{index}}"></image>
+        <view class="close-btn" bind:tap="OnRemoveImages" data-index="{{index}}"></view>
+      </view>
+      <view wx:if="{{TempImages.length <9}}" class="add-image-btn" style="width:{{imageSize}}px;height:{{imageSize}}px" bind:tap="OnAddImageTap">
+        <view>+</view>
+      </view>
+    </view>
+    <button  formType="submit" type="primary" class="SubmitButton">发布</button>
+  </form>
+
+</view>

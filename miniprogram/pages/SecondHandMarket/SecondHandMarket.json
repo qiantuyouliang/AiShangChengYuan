@@ -1,0 +1,8 @@
+{
+  
+  "usingComponents": {
+    "LoadingMore":"../../components/LoadingMore/LoadingMore"
+  },
+  "enablePullDownRefresh":true,
+  "backgroundTextStyle":"dark"
+}
