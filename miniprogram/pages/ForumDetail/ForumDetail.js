@@ -19,7 +19,6 @@ Page({
       Forum : Forum ,
       ImageArry : Forum.Images.split(",")
     })
-    console.log(Forum)
   },
 
   ContactCreator:function(){
