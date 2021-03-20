@@ -8,7 +8,7 @@
       <icon type="clear" class="clearIcon" size="40rpx" bind:tap="onClearEvent"></icon>
     </view>
     <view class="ForumsList"  >
-        <view class="ForumSummary" wx:for="{{Forums}}"   url="../ForumDetail/ForumDetail?Title={{item.ForumTitle}}&Content={{item.ForumContent}}&nickName={{item.ForumAuthor}}&Images={{item.Images}}" hover-class="none">
+        <navigator class="ForumSummary" wx:for="{{Forums}}"   url="../ForumDetail/ForumDetail?Title={{item.ForumTitle}}&Content={{item.ForumContent}}&nickName={{item.ForumAuthor}}&Images={{item.Images}}" hover-class="none">
           <view class="ForumDetail-Text" >
               <view class="ForumTitle">{{item.ForumTitle}}</view>
               <view class="ForumRelative">
@@ -29,7 +29,7 @@
           <view class="ForumDetail-Image">
               <image src="../../images/TestPic/wuye.jpg" mode="aspectFill"></image>
           </view>
-        </view>
+      </navigator>
         <LoadingMore hasmore="{{hasmore}}"></LoadingMore>
     </view>
   </view>

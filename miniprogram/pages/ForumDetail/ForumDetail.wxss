@@ -8,7 +8,6 @@
   padding: 16rpx 16rpx 10rpx 16rpx;
 }
 .ForumTitle{
-  height: 70rpx;
   padding: 4rpx 0rpx 2rpx 12rpx;
   font-size:42rpx ;
   font-weight: 550;

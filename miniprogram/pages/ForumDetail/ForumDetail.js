@@ -19,7 +19,9 @@ Page({
       Forum : Forum ,
       ImageArry : Forum.Images.split(",")
     })
+    console.log(Forum)
   },
+
   ContactCreator:function(){
     wx.switchTab({
       url: '../Messages/Messages',
