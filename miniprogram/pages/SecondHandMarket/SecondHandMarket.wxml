@@ -7,7 +7,7 @@
     <!--**** 搜索栏***-->
       <view class="searchGroup">
         <icon type="search" class="searchIcon" size="40rpx"></icon>
-        <input class="searchInput" placeholder="搜索" value="{{value}}"></input>
+        <input class="searchInput" confirm-type="search" placeholder="搜索" value="{{value}}" bindconfirm="OnSearchEvent"></input>
         <icon type="clear" class="clearIcon" size="40rpx" bind:tap="onClearEvent"></icon>
       </view>
 

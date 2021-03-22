@@ -10,10 +10,6 @@ Page({
   data: {
     hasmore:true,
     Forums:[],
-    avatarUrl: './user-unlogin.png',
-    userInfo: {},
-    logged: false,
-    takeSession: false,
     requestResult: ''
   },
 
@@ -42,7 +38,14 @@ Page({
   onShow: function () {
     this.LoadForum();
   },
-
+  //帖子检索
+  OnSearchEvent:function(event){
+    console.log(event);
+    const countResult = db.collection('SecondHandForum').where({
+        Title:event.detail.value,
+      }).count();
+     console.log(countResult);
+  },
 
   //加载帖子数据
   LoadForum:function(start=0){

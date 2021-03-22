@@ -18,8 +18,8 @@ Page({
     this.setData({
       Forum : Forum ,
       ImageArry : Forum.Images.split(",")
-    })
-  },
+    });
+   },
 
   ContactCreator:function(){
     wx.switchTab({
