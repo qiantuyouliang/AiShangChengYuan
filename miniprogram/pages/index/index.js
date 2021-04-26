@@ -2,26 +2,90 @@
 const app = getApp()
 const db = wx.cloud.database()
 
-Page({
-  data: {
-    
-  },
 
-  onLoad: function() {
-    if (!wx.cloud) {
-      wx.redirectTo({
-        url: '../chooseLib/chooseLib',
-      })
-      return
-    }
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+      currentData : 0,
+      ForumClass:[1,2,2,2],
+      ForumClassName: ['SecondHandForum','SquareForum','Sports','PhoneBook'],
+      Forums:[],
+      hasmore:true,
+      clientHeight:'',
+      PhoneList:[
+        {
+          Name:"物业: ",
+          PhoneNub:"4000669888",
+        },
+        {
+          Name:"电工: ",
+          PhoneNub:"13851870383",
+        },
+        {
+          Name:"废品回收: ",
+          PhoneNub:"13696589095",
+        },      {
+          Name:"自来水: ",
+          PhoneNub:"02586121008",
+        },      {
+          Name:"燃气: ",
+          PhoneNub:"02596889677",
+        },      {
+          Name:"开锁: ",
+          PhoneNub:"13696589095",
+        },
+      ]
   },
-  onShow:function(event){
-    
-    
-    
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+
+
   },
   
-  //获取用户数据  
+/**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    console.log('显示的帖子板块是' + this.data.ForumClassName[this.data.currentData])
+    console.log('ForumClass是'+this.data.ForumClass)
+    this.setData({
+     clientHeight:app.globalData.screenHeight
+    })
+    if(this.data.ForumClassName[this.data.currentData]!= 'PhoneBook'){
+      this.LoadForum();
+      console.log(this.data.Forums)
+    }
+  },
+
+ /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function (event) {
+    this.LoadForum(0);
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    this.LoadForum(this.data.Forums.length);
+  },
+
+//当前页面发布内容  
+onWriterForum:function(event){
+  console.log('帖子的类别是'+this.data.ForumClass)
+    wx.navigateTo({
+      url: '../CreateForum/CreateForum?ForumClass='+this.data.ForumClass[this.data.currentData]+'&ForumClassName='+ this.data.ForumClassName[this.data.currentData],
+    })
+
+  },
+
+//获取用户数据  
   onGetUserInfo: function(e) {
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
@@ -31,84 +95,112 @@ Page({
       })
     }
   },
-  //页面上拉触底事件的处理函数
-  onReachBottom:function(){
-    
+
+//获取当前滑块的index
+  bindchange:function(e){
+    const that  = this;
+    // that.setData({
+    //   currentData: e.detail.current
+    // })
   },
 
-  //页面下拉刷新数据
-  onPullDownRefresh:function(event){
-    
+//点击切换，滑块index赋值
+  checkCurrent:function(e){
+    const that = this;
+    if (that.data.currentData === e.target.dataset.current){
+        return false;
+    }else{
+      that.setData({
+        currentData: e.target.dataset.current
+      })
+    }
+    console.log('显示帖子板块切换到' + this.data.ForumClassName[this.data.currentData])
+    if(this.data.ForumClassName[this.data.currentData]!= 'PhoneBook'){
+        this.LoadForum();
+    }
   },
- 
 
-  onGetOpenid: function() {
-    // 调用云函数
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
-        wx.navigateTo({
-          url: '../userConsole/userConsole',
-        })
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
-        wx.navigateTo({
-          url: '../deployFunctions/deployFunctions',
-        })
-      }
+
+//跳转到详情页
+  onTaptoDetail:function(option){
+    console.log(option)
+    var tmp = option.currentTarget.dataset.id;
+    var ForumContent =JSON.stringify(tmp.ForumContent);
+    var _id = tmp._id;
+    wx.navigateTo({
+      url: '../ForumDetail/ForumDetail?Title=' + tmp.Title+'&ForumContent='+ ForumContent + '&Price=' +tmp.Price+ '&avatarUrl='+ tmp.Author.avatarUrl+'&nickName='+ tmp.Author.nickName+ '&PubTime='+ tmp.PubTime + '&ForumCreatorOpenid='+ tmp.OpenID+'&ForumId='+ _id+'&ForumClassName=SecondHandForum&ForumClass=1',
     })
   },
 
-  // 上传图片
-  doUpload: function () {
-    // 选择图片
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
-        wx.showLoading({
-          title: '上传中',
-        })
-
-        const filePath = res.tempFilePaths[0]
-        
-        // 上传图片
-        const cloudPath = `my-image${filePath.match(/\.[^.]+?$/)[0]}`
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
-
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-            
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
-            })
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
-      },
-      fail: e => {
-        console.error(e)
+//帖子加载
+  LoadForum:function(start=0){
+    const that = this;
+    const ForumClassName = this.data.ForumClassName[this.data.currentData];
+    let promise = db.collection(ForumClassName);
+    if(start > 0){
+      promise = promise.skip(start);
+    }
+     promise.limit(6).orderBy("PubTime","desc").get().then(res =>{
+      const Forums = res.data;
+      console.log(Forums)
+      Forums.forEach(item => {
+        item.PubTime = app.TimeFormat(item.PubTime)
+      });
+      let hasmore = true;
+      if(Forums.length == 0){
+        hasmore = false;
       }
+      let NewForums = [];
+      if(start > 0){
+      NewForums = that.data.Forums.concat(Forums);
+      }else{
+        NewForums = Forums;
+      }
+      that.setData({
+        Forums : NewForums,
+        hasmore: hasmore
+      });
     })
+
   },
+//拨打电话
+  FreeCall:function(event){
+    wx.makePhoneCall({
+      phoneNumber: event.currentTarget.dataset.phonenub,
+    }); 
+  },  
+
+//时间格式化
+  TimeFormat:function(options){
+    var date = options;
+    this.setData({
+      date:date
+    })
+    var date_seconds = date.getTime()/1000;
+    var now = new Date();
+    var now_seconds = now.getTime()/1000;
+    var TimeStamp = now_seconds - date_seconds;
+    var TimeStr = "";
+    if(TimeStamp<60){
+      TimeStr = "刚刚";
+    }else if(TimeStamp >=60 && TimeStamp <60*60){
+      var minutes = parseInt(TimeStamp/60);
+      TimeStr = minutes + "分钟前";
+    }else if(TimeStamp>=60*60&&TimeStamp<60*60*24){
+      var hours = parseInt(TimeStamp/60/60);
+      TimeStr = hours + "小时前";
+    }else if(TimeStamp >= 60*60*24 && TimeStamp<60*60*24*30){
+      var days = parseInt(TimeStamp/60/60/24);
+      TimeStr = days + "天前";
+    }else{
+      var year = date.getFullYear();
+      var month = date.getMonth();
+      var day = date.getDate();
+      var hour = date.getHours();
+      var minute = date.getMinutes();
+      TimeStr = year + "/" + month + "/" +day +"/" + hour +"/"+ minute + "/"
+    }
+    return TimeStr
+},  
 
 })

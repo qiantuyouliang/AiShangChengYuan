@@ -1,0 +1,12 @@
+<!--miniprogram/pages/CommentInput/CommentInput.wxml-->
+<nav bgColor="black" Mainpage="0" >
+  <view slot="content">
+      <view class='Navtxt'>回复</view>
+  </view>
+</nav>
+<view class="Container">
+<form bindsubmit="onCommentSubmit">
+  <textarea name="CommentContent" class="CommentInput" placeholder="评论内容..." style="width:{{screenWidth}}rpx"></textarea>
+  <button  formType="submit" type="primary" class="SubmitButton" size="mini" >发布</button>
+</form>
+</view>

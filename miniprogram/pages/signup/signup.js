@@ -1,33 +1,11 @@
-// pages/PhoneBook/PhoneBook.js
+// pages/signup/signup.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    PhoneList:[
-      {
-        Name:"物业: ",
-        PhoneNub:"4000669888",
-      },
-      {
-        Name:"电工: ",
-        PhoneNub:"13851870383",
-      },
-      {
-        Name:"废品回收: ",
-        PhoneNub:"13696589095",
-      },      {
-        Name:"自来水: ",
-        PhoneNub:"02586121008",
-      },      {
-        Name:"燃气: ",
-        PhoneNub:"02596889677",
-      },      {
-        Name:"开锁: ",
-        PhoneNub:"13696589095",
-      },
-    ]
+
   },
 
   /**
@@ -36,13 +14,7 @@ Page({
   onLoad: function (options) {
 
   },
-  FreeCall:function(event){
-    wx.makePhoneCall({
-      phoneNumber: event.currentTarget.dataset.phonenub,
-    });
 
-      
-  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

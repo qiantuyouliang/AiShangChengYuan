@@ -3,7 +3,7 @@
     <!-- display number of people in the room -->
     <view class="left"></view>
     <!-- room name -->
-    <view class="middle">{{groupName}}</view>
+    <view class="middle">{{chatRoomSubject}}</view>
     <!-- reserved -->
     <view class="right"></view>
   </view>
@@ -21,15 +21,15 @@
       wx:for="{{chats}}"
       wx:key="{{item._id}}"
       id="item-{{index}}"
-      class="message {{openId == item._openid ? 'message__self' : ''}}"
+      class="message {{FirstOpenId == item._openid ? 'message__self' : ''}}"
     >
       <image 
         class="avatar"
-        src="{{item.avatar}}"
+        src="{{item.SendAvatar}}"
         mode="scaleToFill"
       ></image> 
       <view class="main">
-        <view class="nickname">{{item.nickName}}</view>
+        <view class="nickname">{{item.SendNickName}}</view>
         <block wx:if="{{item.msgType === 'image'}}">
           <view class="image-wrapper">
             <view class="loading" wx:if="{{item.writeStatus > -1}}">{{item.writeStatus}}%</view>
@@ -54,7 +54,13 @@
 
   <!-- message sender -->
   <view class="footer">
-    <view class="message-sender" wx:if="{{userInfo}}">
+    <view class="message-sender" wx:if="{{!SendUserInfo}}">
+      <button 
+        bindtap="onGetUserInfo"
+        class="userinfo"
+      >请先登录后参与聊天</button>
+    </view>
+    <view class="message-sender" wx:elif="{{SendUserInfo}}" >
       <input 
         class="text-input"
         type="text"
@@ -70,14 +76,6 @@
         mode="scaleToFill"
         bindtap="onChooseImage"
       ></image>
-    </view>
-
-    <view class="message-sender" wx:if="{{!userInfo}}">
-      <button 
-        open-type="getUserInfo" 
-        bindgetuserinfo="onGetUserInfo"
-        class="userinfo"
-      >请先登录后参与聊天</button>
     </view>
   </view>
 

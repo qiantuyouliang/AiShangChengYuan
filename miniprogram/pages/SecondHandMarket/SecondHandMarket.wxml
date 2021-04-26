@@ -1,33 +1,40 @@
 <!--miniprogram/pages/SecondHandMarket/SecondHandMarket.wxml-->
+<nav bgColor="black" Mainpage="0" >
+    <view slot="content">
+      <view class='Navtxt'>二手市场</view>
+    </view>
+</nav>
 <view class="Container">
   <view class="Bannar">
-    <image src="../../images/TestPic/bannar.jpg"></image>
+    <image src="cloud://cybbs-7goxgizj70ca5050.6379-cybbs-7goxgizj70ca5050-1304964552/IconTabble/bannar.jpg"></image>
   </view>
   <view class="ForumsContainer" >
-    <!--**** 搜索栏***-->
+    <!--**** 搜索栏****-->
       <view class="searchGroup">
         <icon type="search" class="searchIcon" size="40rpx"></icon>
-        <input class="searchInput" confirm-type="search" placeholder="搜索" value="{{value}}" bindconfirm="OnSearchEvent"></input>
-        <icon type="clear" class="clearIcon" size="40rpx" bind:tap="onClearEvent"></icon>
+        <input class="searchInput" confirm-type="search" placeholder="搜索" data-collection="SecondHandForum"  bindfocus="OnSearchEvent" ></input>
+       
       </view>
 
     <!--**** 帖子列表栏****-->
       <view class="forums-group" >
-        <navigator class="forum" wx:for="{{Forums}}"   url="../ForumDetail/ForumDetail?Title={{item.Title}}&Content={{item.Content}}&Price={{item.Price}}&avatarUrl={{item.Author.avatarUrl}}&nickName={{item.Author.nickName}}&Images={{item.Images}}" hover-class="none"  >
-              <image class="ForumMainImage" src="{{item.Images[0]}}"></image>
+        <view class="forum" wx:for="{{Forums}}"  bindtap="onTaptoDetail" data-item="{{item}}" hover-class="none"  >
+              <image class="ForumMainImage" src="{{item.ImageList[0]}}"></image>
               <view class="goodsInfo">{{item.Title}}</view>
               <view class="forumInfo">
                 <view class="price">¥{{item.Price}}</view>
-                <view class="ViewNub">94人看过</view>    
+                <view class="ViewNub">{{item.PubTime}}</view>    
                 <view class="CreateInfo">
                   <text>{{item.Author.nickName}}</text>
                   <image src="{{item.Author.avatarUrl}}"></image>
                 </view>
               </view>
-        </navigator>
+            </view>
       </view>
     <LoadingMore hasmore="{{hasmore}}"></LoadingMore>
   </view>
-
+</view>
+<view class="write-Forum-btn" bindtap="onWriterForum">
+  <image src="cloud://cybbs-7goxgizj70ca5050.6379-cybbs-7goxgizj70ca5050-1304964552/IconTabble/发布.png" ></image>
 </view>
 

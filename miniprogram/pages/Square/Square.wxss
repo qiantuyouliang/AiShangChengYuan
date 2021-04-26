@@ -1,6 +1,11 @@
 /* pages/Square/Square.wxss */
 @import  "../template/template.wxss";
 
+.Navtxt{
+  text-align: center;
+  padding-top:20rpx;
+}
+
 .searchGroup{
   width: 80%;
   height: 60rpx;
@@ -27,32 +32,32 @@
   flex-basis: 40rpx
   }
   
-.ForumsList{
+.ForumsListBoard{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.ForumSummary{
-  width: 96%;
+.ForumNavigate{
+  width: 90%;
   height: 200rpx;
   box-sizing: border-box;
-  padding:6rpx 16rpx 6rpx 16rpx;
+  padding:20rpx 16rpx 6rpx 16rpx;
   margin-top: 10rpx;
-  background-color:white ;
   display: flex;
   justify-content:space-between;
-  border-radius: 20rpx;
+  border-bottom: 1rpx solid #cfcfcf;
 }
 
-.ForumDetail-Text{
-width: 70%;
+.ForumDetailItem{
+width: 96%;
 display: flex;
 flex-direction: column;
 justify-content: space-between;
+padding-bottom: 8rpx;
 }
 
 .ForumTitle{
-  font-size: 30rpx;
+  font-size: 42rpx;
   font-weight: 600;
 }
 .ForumRelative{
@@ -99,10 +104,22 @@ justify-content: space-between;
   font-size: 20rpx;
   color: #656565;
 }
-.ForumDetail-Image {
-  
+
+.write-Forum-btn{
+  position: fixed;
+  right:330rpx;
+  bottom: 90rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background-color:#1296db;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 5px rgb(0, 0, 12,10);
 }
-.ForumDetail-Image image{
-  width: 208rpx;
-  height: 186rpx;
+
+.write-Forum-btn image{
+  width: 60rpx;
+  height: 60rpx;
 }

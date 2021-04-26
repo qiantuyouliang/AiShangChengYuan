@@ -17,19 +17,45 @@ Page({
     requestResult: ''
   },
 
-  /**
+/**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
   },
+
+
+/**
+   * 发帖事件
+   */
+  onWriterForum:function(event){
+    wx.navigateTo({
+      url: '../CreateForum/CreateForum?ForumClass=2&ForumClassName=SquareForum',
+    })
+
+  },
+/**
+   * 搜索事件--导航到搜索页面
+   */
+  OnSearchEvent:function(event){
+    
+    wx.navigateTo({
+      url:  '../search/search?SearchCollection='+ event.target.dataset.collection,
+    })
+    console.log(event)
+  },
+
+/**
+   * 加载帖子数据
+   */
   LoadForum:function(start=0){
     const that = this;
-    let promise = db.collection("Forum");
+    let promise = db.collection("SquareForum");
     if(start > 0){
       promise = promise.skip(start);
     }
     promise.limit(6).orderBy("PubTime","desc").get().then(res =>{
       const Forums = res.data;
+      console.log(Forums)
       let hasmore = true;
       if(Forums.length == 0){
         hasmore = false;
@@ -40,12 +66,16 @@ Page({
       }else{
         NewForums = Forums;
       }
+      NewForums.forEach(avatarUrl => {
+  
+});
+
       that.setData({
         Forums : NewForums,
-        hasmore:hasmore
+        hasmore: hasmore
       });
     })
-    
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

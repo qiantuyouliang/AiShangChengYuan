@@ -3,14 +3,15 @@ const SETDATA_SCROLL_TO_BOTTOM = {
   scrollTop: 100000,
   scrollWithAnimation: true,
 }
+const app = getApp()
 
 Component({
   properties: {
     envId: String,
     collection: String,
-    groupId: String,
-    groupName: String,
-    userInfo: Object,
+    chatRoomSubject: String,
+    SendUserInfo:Object,
+    ForumCreatorOpenid: String,
     onGetUserInfo: {
       type: Function,
     },
@@ -22,15 +23,17 @@ Component({
   data: {
     chats: [],
     textInputValue: '',
-    openId: '',
+    FirstOpenId: '',  //会话发起者ID
     scrollTop: 0,
     scrollToMessage: '',
     hasKeyboard: false,
+    groupName:[],
+
   },
 
   methods: {
     onGetUserInfo(e) {
-      this.properties.onGetUserInfo(e)
+      this.properties.onGetUserInfo(e)     
     },
 
     getOpenID() { 
@@ -39,24 +42,37 @@ Component({
 
     mergeCommonCriteria(criteria) {
       return {
-        groupId: this.data.groupId,
+        chatRoomSubject: this.data.chatRoomSubject,
+          _openid:this.data.FirstOpenId,
+        
         ...criteria,
       }
     },
 
     async initRoom() {
-      this.try(async () => {
-        await this.initOpenID()
+      console.log('initRoom初始化')
+      console.log('chatroom页面 ForumCreatorOpenid是'+this.properties.ForumCreatorOpenid)
 
+      //初始化历史聊天消息
+      this.try(async () => {
+
+        //获取聊天发起者的openid
+        await this.initOpenID()
+        console.log('chatroom页面 FirstOpenId是'+this.data.FirstOpenId)
         const { envId, collection } = this.properties
         this.db = wx.cloud.database({
           env: envId,
         })
+        //生成会话双方的唯一标记名 groupName
+        this.data.groupName.push(this.properties.ForumCreatorOpenid,this.data.FirstOpenId)
+        console.log("本次会话组标记名为")
+        console.log(this.data.groupName)
         const db = this.db
         const _ = db.command
+        const { data: initList } = await db.collection(collection).where({
+          ConversationMatch: _.all([this.data.groupName[0],this.data.groupName[1]])}).orderBy('sendTimeTS', 'desc').get()
 
-        const { data: initList } = await db.collection(collection).where(this.mergeCommonCriteria()).orderBy('sendTimeTS', 'desc').get()
-
+        //打印历史聊天消息
         console.log('init query chats', initList)
 
         this.setData({
@@ -67,17 +83,20 @@ Component({
         this.initWatch(initList.length ? {
           sendTimeTS: _.gt(initList[initList.length - 1].sendTimeTS),
         } : {})
+
       }, '初始化失败')
     },
-
+    
     async initOpenID() {
       return this.try(async () => {
-        const openId = await this.getOpenID()
-
+        const FirstOpenId = await this.getOpenID()
+        
         this.setData({
-          openId,
+          FirstOpenId:FirstOpenId,
         })
-      }, '初始化 openId 失败')
+      
+      
+      }, '初始化FirstOpenId 失败')
     },
 
     async initWatch(criteria) {
@@ -87,7 +106,8 @@ Component({
         const _ = db.command
 
         console.warn(`开始监听`, criteria)
-        this.messageListener = db.collection(collection).where(this.mergeCommonCriteria(criteria)).watch({
+        this.messageListener = db.collection(collection).where({
+          ConversationMatch: _.all(this.data.groupName)}).watch({
           onChange: this.onRealtimeMessageSnapshot.bind(this),
           onError: e => {
             if (!this.inited || this.fatalRebuildCount >= FATAL_REBUILD_TOLERANCE) {
@@ -106,6 +126,8 @@ Component({
       }, '初始化监听失败')
     },
 
+
+    //没看懂！！！！！！！！
     onRealtimeMessageSnapshot(snapshot) {
       console.warn(`收到消息`, snapshot)
 
@@ -125,7 +147,7 @@ Component({
         for (const docChange of snapshot.docChanges) {
           switch (docChange.queueType) {
             case 'enqueue': {
-              hasOthersMessage = docChange.doc._openid !== this.data.openId
+              hasOthersMessage = docChange.doc._FirstOpenId !== this.data.FirstOpenId
               const ind = chats.findIndex(chat => chat._id === docChange.doc._id)
               if (ind > -1) {
                 if (chats[ind].msgType === 'image' && chats[ind].tempFilePath) {
@@ -150,7 +172,7 @@ Component({
         }
       }
     },
-
+    //逐条发送文字消息
     async onConfirmSendText(e) {
       this.try(async () => {
         if (!e.detail.value) {
@@ -160,12 +182,13 @@ Component({
         const { collection } = this.properties
         const db = this.db
         const _ = db.command
-
+        const userInfo = wx.getStorageSync('userInfo')
         const doc = {
           _id: `${Math.random()}_${Date.now()}`,
-          groupId: this.data.groupId,
-          avatar: this.data.userInfo.avatarUrl,
-          nickName: this.data.userInfo.nickName,
+          chatRoomSubject: this.data.chatRoomSubject,
+          SendAvatar: userInfo.avatarUrl,
+          SendNickName: userInfo.nickName,
+          ConversationMatch:this.data.groupName,   //标记会话双方
           msgType: 'text',
           textContent: e.detail.value,
           sendTime: new Date(),
@@ -178,7 +201,7 @@ Component({
             ...this.data.chats,
             {
               ...doc,
-              _openid: this.data.openId,
+              _FirstOpenId: this.data.FirstOpenId,
               writeStatus: 'pending',
             },
           ],
@@ -210,7 +233,7 @@ Component({
           const { envId, collection } = this.properties
           const doc = {
             _id: `${Math.random()}_${Date.now()}`,
-            groupId: this.data.groupId,
+            chatRoomSubject: this.data.chatRoomSubject,
             avatar: this.data.userInfo.avatarUrl,
             nickName: this.data.userInfo.nickName,
             msgType: 'image',
@@ -223,7 +246,7 @@ Component({
               ...this.data.chats,
               {
                 ...doc,
-                _openid: this.data.openId,
+                _FirstOpenId: this.data.FirstOpenId,
                 tempFilePath: res.tempFilePaths[0],
                 writeStatus: 0,
               },
@@ -232,7 +255,7 @@ Component({
           this.scrollToBottom(true)
 
           const uploadTask = wx.cloud.uploadFile({
-            cloudPath: `${this.data.openId}/${Math.random()}_${Date.now()}.${res.tempFilePaths[0].match(/\.(\w+)$/)[1]}`,
+            cloudPath: `${this.data.FirstOpenId}/${Math.random()}_${Date.now()}.${res.tempFilePaths[0].match(/\.(\w+)$/)[1]}`,
             filePath: res.tempFilePaths[0],
             config: {
               env: envId,
@@ -330,6 +353,7 @@ Component({
   },
 
   ready() {
+    
     global.chatroom = this
     this.initRoom()
     this.fatalRebuildCount = 0

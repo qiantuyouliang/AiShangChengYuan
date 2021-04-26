@@ -1,25 +1,91 @@
 <!--index.wxml-->
-<view class="container">
-
-<!--**** 滚动栏****-->
-  <view class= "swiper">
-    <swiper class='item-image' autoplay indicator-dots indicator-color="grey" indicator-active-color="#fff" sytle='width:{{width*2}}rpx; height:{{height*2}}rpx'>
-      <swiper-item>
-      <image src="../../images/swiper-view/spring.jpg"></image>
-      </swiper-item>
-      <swiper-item>
-      <image src="../../images/swiper-view/summer.jpg"></image>
-      </swiper-item>
-      <swiper-item>
-      <image src="../../images/swiper-view/autumn.jpg"></image>
-      </swiper-item>
-      <swiper-item>
-      <image src="../../images/swiper-view/winter.jpg"></image>
-      </swiper-item>
-    </swiper>
-  </view>
-
-<!--*************** 版块图标栏********************-->
 <import src= "../template/template.wxml" />
-<template is ="FieldLable"></template>
+<nav bgColor="black" Mainpage="1" >
+  <view slot="content">
+      <view class='Navtxt'>爱上诚园</view>
+  </view>
+</nav>
+
+<view class="container">
+<!--**** 滚动栏****-->
+    <view class= "swiper">
+      <swiper class='item-image' autoplay indicator-dots indicator-color="grey" indicator-active-color="#fff" sytle='width:{{width*2}}rpx; height:{{height*2}}rpx'>
+        <swiper-item>
+        <image src="../../images/swiper-view/spring.jpg"></image>
+        </swiper-item>
+        <swiper-item>
+        <image src="../../images/swiper-view/summer.jpg"></image>
+        </swiper-item>
+        <swiper-item>
+        <image src="../../images/swiper-view/autumn.jpg"></image>
+        </swiper-item>
+        <swiper-item>
+        <image src="../../images/swiper-view/winter.jpg"></image>
+        </swiper-item>
+      </swiper>
+    </view>
+
+
+
+<!--**** 页面切换*****-->
+
+    <view class='topTabSwiper'>
+        <view class='tab  {{currentData == 0 ? "tabBorer" : ""}}'  data-current = "0" bindtap='checkCurrent'>二手</view>
+        <view class='tab  {{currentData == 1 ? "tabBorer" : ""}}'  data-current = "1" bindtap='checkCurrent'>广场</view>
+        <view class='tab  {{currentData == 2 ? "tabBorer" : ""}}'  data-current = "2" bindtap='checkCurrent'>文体</view>
+        <view class='tab  {{currentData == 3 ? "tabBorer" : ""}}'  data-current = "3" bindtap='checkCurrent'>电话簿</view>
+    </view>
+    <swiper  current="{{currentData}}" style="width:100%;height:1000rpx" duration="300" bindchange="bindchange">
+        <swiper-item>
+          <scroll-view scroll-y="true" style="height: auto">
+            <view class="Tempalte" wx:for="{{Forums}}" bindtap="onTaptoDetail" data-id="{{item}}"  >
+              <template is ="ForumsListBoard" data="{{...item}}" ></template> 
+            </view>
+          </scroll-view>
+          <LoadingMore hasmore="{{hasmore}}"></LoadingMore>
+          <view class="blank"></view>
+        </swiper-item> 
+        <swiper-item>
+          <view class="Tempalte" wx:for="{{Forums}}" bindtap="onTaptoDetail" data-id="{{item}}"  >
+             <template is ="ForumsListBoard" data="{{...item}}" ></template> 
+          </view>
+          <LoadingMore hasmore="{{hasmore}}"></LoadingMore>
+          <view class="blank"></view>
+        </swiper-item>
+        <swiper-item>
+          <view class="Tempalte" wx:for="{{Forums}}" bindtap="onTaptoDetail" data-id="{{item}}"  >
+             <template is ="ForumsListBoard" data="{{...item}}" ></template> 
+          </view>
+          <LoadingMore hasmore="{{hasmore}}"></LoadingMore>
+          <view class="blank"></view>
+        </swiper-item>
+        <swiper-item>
+          <view class="Header">
+            <text>常用电话号码</text>
+          </view>
+          <view class="PhoneListContainer">
+              <view class="PhoneTab">
+                      <view class="PhoneList" wx:for="{{PhoneList}}">
+                        <view class="Name">
+                          <text decode="true">{{item.Name}}&nbsp;</text>
+                        </view>
+                        <view class="PhoneNub">
+                          <text decode="true">{{item.PhoneNub}}</text>
+                        </view>
+                        <view class="MakeCall" data-PhoneNub="{{item.PhoneNub}}" catchtap="FreeCall" >
+                          <image src="../../images/IconLable/MakeCall.png"></image>
+                        </view>
+                      </view>
+              </view>
+          </view>
+          <view class="PhoneBookComment">
+            评论区
+          </view>
+        </swiper-item> 
+    </swiper> 
+
+    <view class="write-Forum-btn" bindtap="onWriterForum">
+        <image src="cloud://cybbs-7goxgizj70ca5050.6379-cybbs-7goxgizj70ca5050-1304964552/IconTabble/发布.png" ></image>
+    </view>
+    
 </view>

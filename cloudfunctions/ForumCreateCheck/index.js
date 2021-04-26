@@ -1,7 +1,7 @@
 // 云函数入口文件
 const cloud = require("wx-server-sdk")
 
-cloud.init()
+cloud.init({env: cloud.DYNAMIC_CURRENT_ENV})
 const db = cloud.database();
 const got = require ("got");
 const request =require("request-promise");
@@ -13,19 +13,34 @@ const CHECK_URL = "https://api.weixin.qq.com/wxa/msg_sec_check?access_token="
 // 云函数入口函数
 exports.main = async (event, context) => {
   const Title = event.Title;
-  const Content = event.Content;
+  const ForumContent = event.ForumContent;
   const Price = event.Price;
   const Author = event.Author;
-  const Images = event.images;
+  const ForumClassName = event.ForumClassName;
   const tokenResponse= await got(TOKEN_URL);
   const tokenBody = JSON.parse(tokenResponse.body);
   const token = tokenBody.access_token;
-  //内容发送检测
+  const wxContext = cloud.getWXContext();
+  const OpenID = wxContext.OPENID;
+
+//内容的文字部分合并
+  var contentReadytoCheck = '';
+  var ImageList = [];
+    for(var item of ForumContent ){
+      if(item.ContentType ==1){
+        contentReadytoCheck = contentReadytoCheck + item.Content;
+      }else if(item.ContentType ==2){
+        ImageList.push(item.Src);
+      }
+    } 
+
+
+//合并后的内容发送检测
   const CheckResponse = await request.post({
     uri: CHECK_URL + token,
     method: "post",
     body:{
-      content:Content
+      content:contentReadytoCheck
     },
     json: true
   });
@@ -36,14 +51,15 @@ exports.main = async (event, context) => {
       avatarUrl: Author.avatarUrl
     }
     //文字链接信息进行数据库存储
-    return await db.collection("SecondHandForum").add({
+    return await db.collection(ForumClassName).add({
       data:{
         Title:Title,
-        Content:Content,
+        ForumContent:ForumContent,
+        ImageList:ImageList,
         Price:Price,
         PubTime:db.serverDate(),  //入库时间
         Author:newAuthor,
-        Images:Images,
+        OpenID:OpenID,
       }
     })
   }else{

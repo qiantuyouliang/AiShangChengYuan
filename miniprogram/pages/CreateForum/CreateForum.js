@@ -8,38 +8,126 @@ Page({
    * 页面的初始数据
    */
   data: {
-    TempImages:[]
+    ForumContent:[{id:0,ContentType:1}],
+    TempImages:[],
+    ForumClass:'',
+    ForumClassName:'',
   },
 
 /**
    * 查看是否需要鉴权
    */
-  onLoad: function () {
-    if(app.is_login()){
-      wx.switchTab({
-        url: '../CreateForum/CreateForum',
-      })
-    }else{
+  onLoad: function (event) {
+    console.log(event)
+    this.setData({
+          ForumClass:event.ForumClass,  
+      ForumClassName:event.ForumClassName, 
+    })
+    const userInfo = wx.getStorageSync('userInfo')
+    if(userInfo == ''){
      wx.navigateTo({
        url: '../login/login',
      })
+     
     }
-    this.initImageSize();
 
   },
 
 
+  OnSubmitEventPaper:function(Option){
+
+    //取出文字数组
+    var TxtContent = Option.detail.value 
+    var ForumContent = this.data.ForumContent;
+    const Price = TxtContent.Price;
+    const Title = TxtContent.Title;
+    const ForumClassName = this.data.ForumClassName;
+    const Author = wx.getStorageSync('userInfo') ;
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth()+1;
+    const day = today.getDate();
+    wx.showLoading({
+      title: '正在发布中...',
+    });
+    var that= this;
+//文字数组与图片数组合并成要存储的数组
+    const MergeArray = async function(ForumContent){
+      for(var key in ForumContent){
+        console.log('开始执行合并')
+        if(ForumContent[key].ContentType==1){
+          ForumContent[key].Content = TxtContent[key];
+          console.log('执行了一次文字合并')
+        }else if(ForumContent[key].ContentType==2){
+          await wx.cloud.uploadFile({
+            filePath: ForumContent[key].Src[0],
+            cloudPath: ForumClassName+"/"+year+"/"+month+"/"+day+"/"+getUUID()+"."+getExt(ForumContent[key].Src[0]),
+              }).then(res =>{
+                    ForumContent[key].Src= res.fileID
+                    console.log('执行了一次图片合并')
+                  }).catch(error =>{
+                    console.error();
+                      })
+              }
+           }
+        console.log('所有合并都已完成')
+        if(Title ==''){
+          wx.showToast({
+            title: '请输入标题',
+            icon: 'error',
+            duration: 1500
+          });
+         }
+        const Forum = {
+          Title:Title,
+          Author:Author,
+          Price:Price,
+          ForumContent:ForumContent,
+          ForumClassName:ForumClassName};
+          console.log(Forum)
+        that.PublicForumTxt(Forum); 
+        }
+     MergeArray(ForumContent); //函数异步执行有点问题
+
+    },
 
 
-  initImageSize:function(){
-    const windowWidth = wx.getSystemInfoSync().windowWidth;
-    const containerWidth = windowWidth -30;
-    const imageSize = (containerWidth - 9*3)/3;
-    this.setData({
-      imageSize:imageSize
-    });  
-  },
+    
 
+//文字审核及发布
+    PublicForumTxt:function(Forum){
+        //云函数文字内容检测
+          wx.cloud.callFunction({
+          name:"ForumCreateCheck",
+          data:Forum,
+            success:res =>{
+                const _id = res.result._id;
+                if(_id){
+                  wx.hideLoading();
+                  wx.showToast({
+                    title: '发布成功！',
+                    icon: 'success',
+                    duration: 1800
+                  });
+                  setTimeout(function(){
+                    wx.navigateBack({
+                      delta: 1,
+                    })
+                  },1000)
+                }
+                else{
+                  wx.showToast({
+                    title: res.result.errmsg,
+                    icon: 'error',
+                    duration: 2800
+                  })
+                }
+              }
+        })
+        },
+
+
+//ForumClass=1 时添加图片函数
   OnAddImageTap:function(){
     const that = this;
     wx.chooseImage({
@@ -53,6 +141,8 @@ Page({
       },
     })
   },
+
+//ForumClass=1 时删除图片函数 
   OnRemoveImages:function(event){
     const index = event.target.dataset.index;
     const TempImages = this.data.TempImages;
@@ -62,94 +152,33 @@ Page({
     });
   },
 
-  OnSubmitEvent:function(event){
-    const that = this;
-    const Title = event.detail.value.Title;
-    const Price = event.detail.value.Price;
-    const Content = event.detail.value.Content;
-    const Author = app.globalData.userInfo;
-    
-    wx.showLoading({
-      title: '正在发布中...',
-    });
-    //图片检查并上传
-    if(that.data.TempImages.length > 0){
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = today.getMonth()+1;
-      const day = today.getDate();
-      const Forum = {
-        Title:Title,
-        Price:Price,
-        Author:Author,
-        Content :Content
-      }
-      const fileIdList=[];
-      that.data.TempImages.forEach((value,index) => {
-        wx.cloud.uploadFile({
-          filePath:value,
-          cloudPath:"SecondHandForum/"+year+"/"+month+"/"+day+"/"+getUUID()+"."+getExt(value),
-          success:res =>{
-            fileIdList.push(res.fileID);
-            if(fileIdList.length == that.data.TempImages.length){
-              //进行帖子的文字审核及发布
-                Forum.images = fileIdList;
-                that.PublicForumTxt(Forum);
-          }
-        }
-      });
+//ForumClass=2 时添加图片函数
+    OnAddImageTap2:function(e){
+      const that = this
+      var ForumContent = this.data.ForumContent;
+      let InsertId = e.currentTarget.dataset.idx
+      wx.chooseImage({
+        success:function(res){
+          const TempImages = res.tempFilePaths;
+          console.log(res)
+          var newData = { id:ForumContent.length,ContentType:2,Src:res.tempFilePaths};
+          ForumContent.splice(InsertId+1 ,0, newData);
+          that.setData({
+            ForumContent:ForumContent,
+          })
+
+        },
       })
-    }else{
-      wx.showToast({
-        title: '请插入图片！',
-        icon: 'error',
-        duration: 1500
-      });
-     }
- },
-    
-
-//文字审核及发布
- PublicForumTxt:function(Forum){
-  //云函数文字内容检测
-    wx.cloud.callFunction({
-    name:"ForumCreateCheck",
-    data:Forum,
-      success:res =>{
-          const _id = res.result._id;
-          if(_id){
-            wx.hideLoading();
-            wx.showToast({
-              title: '发布成功！',
-              icon: 'success',
-              duration: 1800
-            });
-            setTimeout(function(){
-              wx.switchTab({
-                url: '../../pages/index/index',
-              })
-            },1000)
-          }
-          else{
-            wx.showToast({
-              title: res.result.errmsg,
-              icon: 'error',
-              duration: 2800
-            })
-          }
-        }
-  })
-  },
-
-  //图片预览实现
-  OnImagePreview:function(event){
-    const that = this;
-    const index = event.target.dataset.index;
-    const current = that.data.TempImages[index];
-    wx.previewImage({
-      urls: that.data.TempImages,
-      current:current
+    },
+  
+//ForumClass=2 时添加文字框函数
+  OnAddTextTap2:function(event){
+    var ForumContent = this.data.ForumContent;
+    let InsertId = event.currentTarget.dataset.idx
+    var newData = { id:ForumContent.length,ContentType:1};
+    ForumContent.splice(InsertId+1 ,0, newData);
+    this.setData({
+      ForumContent:ForumContent,
     })
   }
-
 })

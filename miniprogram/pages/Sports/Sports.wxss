@@ -1,0 +1,130 @@
+/* pages/Sports/Sports.wxss */
+.Navtxt{
+  text-align: center;
+  padding-top:20rpx;
+}
+
+.searchGroup{
+  width: 80%;
+  height: 60rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 20rpx;
+  margin: 10rpx auto;
+  padding: 2rpx 20rpx;
+  background-color: #ffff;
+  }
+  
+  .searchIcon{
+  flex-basis: 40rpx
+  }
+  .searchInput{
+  min-height: 52rpx;
+  height: 52rpx;
+  font-size: 28rpx;
+  flex: 1
+  }
+  
+  .clearIcon{
+  flex-basis: 40rpx
+  }
+  
+.ForumsList{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ForumSummary{
+  width: 96%;
+  height: 200rpx;
+  box-sizing: border-box;
+  padding:6rpx 16rpx 6rpx 16rpx;
+  margin-top: 10rpx;
+  background-color:white ;
+  display: flex;
+  justify-content:space-between;
+  border-radius: 20rpx;
+}
+
+.ForumDetail-Text{
+width: 70%;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+}
+
+.ForumTitle{
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.ForumRelative{
+  display: flex;
+  justify-content: space-between;
+}
+.CreatorInfo{
+  display: flex;
+  align-items: center;
+}
+.CreatorInfo image{
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+}
+.CreatorInfo text{
+  padding-left: 10rpx;
+  font-size: 20rpx;
+  color: #656565;
+}
+.ViewsNub{
+  display: flex;
+  align-items: center;
+  
+}
+.ViewsNub image{
+  width: 30rpx;
+  height: 30rpx;
+}
+.ViewsNub text{
+  font-size: 20rpx;
+  color: #656565;
+}
+.CommentsNub{
+  display: flex;
+  align-items: center;
+  margin-right: 30rpx ;
+}
+.CommentsNub image{
+  width: 30rpx;
+  height: 30rpx;
+}
+.CommentsNub text{
+  font-size: 20rpx;
+  color: #656565;
+}
+.ForumDetail-Image {
+  
+}
+.ForumDetail-Image image{
+  width: 208rpx;
+  height: 186rpx;
+}
+
+.write-Forum-btn{
+  position: fixed;
+  right:330rpx;
+  bottom: 90rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background-color:#1296db;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 5px rgb(0, 0, 12,10);
+}
+
+.write-Forum-btn image{
+  width: 60rpx;
+  height: 60rpx;
+}

@@ -1,0 +1,12 @@
+<!--components/nav.wxml-->
+<view class='nav-wrap' style="background-color:{{bgColor}};">
+    <view style="height:{{statusBarHeight}}px;"></view>
+    <view class='content'>
+        <view wx:if="{{Mainpage != 1}}" class="back" bindtap='back'>
+        <image  src="cloud://cybbs-7goxgizj70ca5050.6379-cybbs-7goxgizj70ca5050-1304964552/IconTabble/fallback.png" ></image>
+        </view>
+        <slot name="content"></slot>
+    </view>
+</view>
+<view class="blankForNav" style="width:100%;height:{{navBarHeight}}px;">
+</view>

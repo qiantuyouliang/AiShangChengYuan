@@ -1,25 +1,31 @@
 /**index.wxss**/
-/************** 版面图标栏**************/
 @import  "../template/template.wxss";
-
-/************ 滚动栏********/
-.swiper{
-  width: 94%;
-  height: 280rpx;
-  padding-bottom: 30rpx;
+.Navtxt{
+  text-align: center;
+  padding-top:20rpx;
 }
 
+.container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/********* 滚动栏********/
+.swiper{
+  width: 100%;
+  height: 250rpx;
+  padding-bottom: 10rpx;
+}
 .item-image{
 width: 100%;
-height: 280rpx;
+height: 250rpx;
 background-color: yellowgreen;
-border-radius: 20rpx;
 }
 
 .item-image image{
 width: 100%;
 height: 100%;
-border-radius: 20rpx;
 }
 
 .item-all-board{
@@ -28,3 +34,39 @@ height: 600rpx
 }
 
 
+/***** 页面切换栏****/
+.tab{
+float: left;
+width: 25%;
+text-align: center;
+padding: 10rpx 0; 
+color:#656565;
+}
+.topTabSwiper{
+  width:100%; 
+  zoom: 1;
+}
+.topTabSwiper:after{
+  content: ""; 
+  clear: both;
+  display: block;
+}
+.tabBorer{ 
+  color:#1296db;
+  font-weight: 600; 
+  border-bottom: 3px solid #1296db; 
+}
+.swiper{
+  width: 100%;
+}
+.swiper_con{
+  text-align: center; 
+  width: 100%; 
+  height: 100%; 
+  padding: 80rpx 0;
+}
+
+.blank{
+  height: 150rpx;
+  background-color:red;
+  }

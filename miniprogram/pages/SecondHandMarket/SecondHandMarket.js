@@ -10,6 +10,9 @@ Page({
   data: {
     hasmore:true,
     Forums:[],
+    avatarUrl: './user-unlogin.png',
+    logged: false,
+    takeSession: false,
     requestResult: ''
   },
 
@@ -17,12 +20,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (!wx.cloud) {
-      wx.redirectTo({
-        url: '../chooseLib/chooseLib',
-      })
-      return
-    }
+
   },
 
   /**
@@ -37,25 +35,46 @@ Page({
    */
   onShow: function () {
     this.LoadForum();
-  },
-  //帖子检索
-  OnSearchEvent:function(event){
-    console.log(event);
-    const countResult = db.collection('SecondHandForum').where({
-        Title:event.detail.value,
-      }).count();
-     console.log(countResult);
+    
   },
 
-  //加载帖子数据
+/**
+   *  帖子检索
+   */
+ 
+  OnSearchEvent:function(event){
+    wx.navigateTo({
+      url: '../search/search?SearchCollection='+ event.target.dataset.collection,
+  
+    })
+    
+  },
+
+  onTaptoDetail:function(option){
+
+    var tmp = option.currentTarget.dataset.item;
+    var ForumContent =JSON.stringify(tmp.ForumContent);
+    var _id = tmp._id;
+    wx.navigateTo({
+      url: '../ForumDetail/ForumDetail?Title=' + tmp.Title+'&ForumContent='+ ForumContent + '&Price=' +tmp.Price+ '&avatarUrl='+ tmp.Author.avatarUrl+'&nickName='+ tmp.Author.nickName+ '&PubTime='+ tmp.PubTime + '&ForumCreatorOpenid='+ tmp.OpenID+'&ForumId='+ _id+'&ForumClassName=SecondHandForum&ForumClass=1',
+    })
+  },
+
+/**
+   * 加载帖子数据
+   */
   LoadForum:function(start=0){
     const that = this;
     let promise = db.collection("SecondHandForum");
     if(start > 0){
       promise = promise.skip(start);
-    }
-    promise.limit(6).orderBy("PubTime","desc").get().then(res =>{
+      }
+      promise.limit(6).orderBy("PubTime","desc").get().then(res =>{
       const Forums = res.data;
+      
+      Forums.forEach(item => {
+        item.PubTime = app.TimeFormat(item.PubTime)
+      });
       let hasmore = true;
       if(Forums.length == 0){
         hasmore = false;
@@ -68,10 +87,21 @@ Page({
       }
       that.setData({
         Forums : NewForums,
-        hasmore:hasmore
+        hasmore: hasmore
       });
+
     })
     
+  },
+
+  /**
+   * 发布帖子
+   */
+  onWriterForum:function(event){
+    wx.navigateTo({
+      url: '../CreateForum/CreateForum?ForumClass=1&ForumClassName=SecondHandForum',
+    })
+
   },
   /**
    * 生命周期函数--监听页面隐藏

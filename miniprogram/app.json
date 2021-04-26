@@ -1,15 +1,21 @@
 {
   "pages": [
+
     "pages/index/index",
-    "pages/SecondHandMarket/SecondHandMarket",
-    "pages/ForumDetail/ForumDetail",
-    "pages/Square/Square", 
     "pages/CreateForum/CreateForum",
+    "pages/Square/Square",
+    "pages/ForumDetail/ForumDetail",
+
+    "pages/CommentInput/CommentInput",
+    "pages/SecondHandMarket/SecondHandMarket",
+    "pages/search/search",
+    "pages/Sports/Sports",
     "pages/login/login",
-    "pages/PhoneBook/PhoneBook",
+    "pages/room/room",
     "pages/template/template",
     "pages/Messages/Messages",
-    "pages/me/me"
+    "pages/me/me",
+    "pages/signup/signup"
 
   ],
   "window": {
@@ -17,7 +23,8 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "爱上诚园",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "color": "#8a8a8a",
@@ -28,12 +35,6 @@
         "text": "首页",
         "iconPath": "images/tabBar/home1.png",
         "selectedIconPath": "images/tabBar/home1_selected.png"
-      },
-      {
-        "pagePath": "pages/CreateForum/CreateForum",
-        "text": "发布",
-        "iconPath": "images/tabBar/create.png",
-        "selectedIconPath": "images/tabBar/create_selected.png"
       },
       {
         "pagePath": "pages/Messages/Messages",

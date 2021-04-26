@@ -16,20 +16,26 @@ Page({
     
   },
   //用户信息的存储
-  OnGetUserInfo:function(event){
-    const userInfo = event.detail.userInfo;
-    console.log(userInfo);
-    if(userInfo){
-        app.SetUserInfo(userInfo);
-        wx.showToast({
-          title: '授权成功！',
-          });
-        setTimeout(()=>{
-         wx.switchTab({
-          url: '../CreateForum/CreateForum',
-        });
-      },1500)
-    }
+  OnGetUserInfoLogin:function(event){
+    wx.getUserProfile({
+      desc:'用于完善用户资料',
+      success: (res) =>{
+        const userInfo = res.userInfo;
+        wx.setStorageSync('userInfo', userInfo)
+
+          if(userInfo){
+              app.SetUserInfo(userInfo);
+              wx.showToast({
+                title: '授权成功！',
+                });
+              setTimeout(()=>{
+             wx.navigateBack({
+               delta: 0,
+             })
+            },1500)
+          }
+        }
+      })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

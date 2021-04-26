@@ -1,4 +1,10 @@
 /* miniprogram/pages/SecondHandMarket/SecondHandMarket.wxss */
+.Navtxt{
+  text-align: center;
+  padding-top:20rpx;
+}
+
+
 /********** searchGroup.wxss *******/
 .Container{
   display: flex;
@@ -36,7 +42,8 @@ flex: 1
 flex-basis: 40rpx
 }
 
-/*        *帖子模块*     */
+/* *帖子模块
+**/
 .ForumsContainer{
   width:100%;
   /* background-color: rgb(210, 221, 210); 
@@ -112,4 +119,22 @@ flex-basis: 40rpx
   color: #656565;
   font-weight: 500;
   margin-right :6rpx; 
+}
+.write-Forum-btn{
+  position: fixed;
+  right:330rpx;
+  bottom: 90rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background-color:#1296db;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 5px rgb(0, 0, 12,10);
+}
+
+.write-Forum-btn image{
+  width: 60rpx;
+  height: 60rpx;
 }

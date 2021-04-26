@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "LoadingMore":"../../components/LoadingMore/LoadingMore"
+    "LoadingMore":"../../components/LoadingMore/LoadingMore",
+    "nav":"../../components/nav/nav"
   },
   "enablePullDownRefresh":true,
   "backgroundTextStyle":"dark"

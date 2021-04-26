@@ -42,7 +42,7 @@
   display: flex;
   flex-direction: row;
   position: relative;
-  margin: 12rpx 0;
+  margin: 20rpx 0;
 }
 
 .body .message.message__self {
@@ -51,7 +51,7 @@
 
 .body .message .avatar {
   position: relative;
-  top: 5rpx;
+  top: -4rpx;
   width: 60rpx;
   height: 60rpx;
   border-radius: 5rpx;

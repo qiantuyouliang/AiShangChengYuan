@@ -1,0 +1,20 @@
+/* miniprogram/pages/CommentInput/CommentInput.wxss */
+.Navtxt{
+  text-align: center;
+  padding-top:20rpx;
+}
+.Container{
+   width: 100%;
+   box-sizing: border-box;
+ padding: 20rpx;
+}
+.CommentInput{
+  padding: 8rpx;
+  height: 300rpx;
+  background-color: rgb(218, 216, 216);
+}
+
+.SubmitButton{
+  margin-top: 20rpx;
+  width: 60rpx;
+}

@@ -18,7 +18,7 @@ Component({
     },
     height:{
       type:Number,
-      value:40
+      value:100
     }
 
   },

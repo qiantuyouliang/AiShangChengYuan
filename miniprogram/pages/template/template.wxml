@@ -1,32 +1,4 @@
 <!--miniprogram/pages/template/template.wxml-->
-<template name = 'FieldLable'>
-<view class="FieldLable" >
-    <view class="FieldLableItem">
-      <navigator url="../SecondHandMarket/SecondHandMarket" hover-class="none">
-        <image class="Icon" src="../../images/IconLable/ershoushichang.png"></image>
-        <view class="IconText">二手市场</view>
-      </navigator>  
-    </view>
-    <view class="FieldLableItem">
-      <navigator url="../Square/Square" hover-class="none">
-      <image class="Icon" src="../../images/IconLable/xiaoquguangchang.png"></image>
-      <view class="IconText">小区广场</view>
-      </navigator>
-    </view>
-    <view class="FieldLableItem">
-      <navigator url="../" hover-class="none">
-      <image class="Icon" src="../../images/IconLable/jiaoyouxinxi.png"></image>
-      <view class="IconText">交友信息</view>
-      </navigator>
-    </view>
-    <view class="FieldLableItem">
-    <navigator url="../PhoneBook/PhoneBook" hover-class="none">
-      <image class="Icon" src="../../images/IconLable/bianmindianhuabu.png"></image>
-      <view class="IconText">小区电话簿</view>
-    </navigator>
-    </view>
-</view>
-</template>
 
 <template name="tabBar">
 <view class="tabBar" >
@@ -35,12 +7,6 @@
         <image class="TabbarIcon" src="../../images/tabBar/home1.png"></image>
         <view class="IconText">主页</view>
       </navigator>  
-    </view>
-    <view class="tabBar-item">
-      <navigator url="../CreateForum/CreateForum" open-type="switchTab" hover-class="none">
-      <image class="TabbarIcon" src="../../images/tabBar/create.png"></image>
-      <view class="IconText">发帖</view>
-      </navigator>
     </view>
     <view class="tabBar-item">
       <navigator url="../Messages/Messages" open-type="switchTab" hover-class="none">
@@ -57,3 +23,84 @@
 </view>
 </template>
 
+<template name="ForumsListBoard" >  
+  <view class="ForumBoard" > 
+    <view class="ForumsList">
+      <view class="ForumContent">
+          <view wx:if="{{ImageList.length >=3 }}" class="ImgContent">
+              <view class="TitleGroup">
+                    <view class="ForumTitle">{{Title}}</view>
+                    <view class="Price" wx:if="{{Price}}">
+                        <text decode="true" >¥&nbsp;{{Price}}</text>  
+                    </view>
+              </view>
+              <view class="ImageList" >
+                    <image mode="aspectFill"  src="{{ImageList[0]}}"></image>
+                    <image mode="aspectFill"  src="{{ImageList[1]}}"></image>
+                    <image mode="aspectFill"  src="{{ImageList[2]}}"></image>
+              </view>
+          </view>
+          <view wx:if="{{ImageList.length <3 && ImageList.length > 0}}" class="ImgTxtContent">
+            <view class="ImgTxtContent-left">
+                <view class="TitleGroup">
+                        <view class="ForumTitle">{{Title}}</view>
+                        <view class="Price" wx:if="{{Price}}">
+                            <text decode="true" >¥&nbsp;{{Price}}</text>  
+                        </view>
+                </view>
+                <view class="TxtContent-Txt">{{ForumContent[0].Content}}</view>
+            </view>    
+            <view class="ImgTxtContent-right" >
+                <image mode="aspectFill"  src="{{ImageList[0]}}"></image>
+            </view>
+          </view>   
+          <view wx:elif="{{ImageList.length==0}}" class="TxtContent">
+            <view class="TitleGroup">
+                <view class="ForumTitle">{{Title}}</view>
+                <view class="Price" wx:if="{{Price}}">
+                    <text decode="true" >¥&nbsp;{{Price}}</text>  
+                </view>
+            </view>
+            <view class="TxtContent-Txt">{{ForumContent[0].Content}}</view>
+          </view> 
+      </view>
+      <view class="ForumRelative">
+            <view class="CreatorInfo">
+              <image src="{{Author.avatarUrl}}"></image>
+              <text class="nickName">{{Author.nickName}}</text>
+            </view>
+            <view class="ViewsNub">
+              <image src="../../images/IconLable/Saw.png"></image>
+              <text>98</text>
+            </view>
+            <view class="CommentsNub">
+              <text>{{PubTime}}</text>
+            </view>
+      </view>
+    </view>
+  </view>    
+</template>
+
+<template name="PhoneBook">
+    <view class="Header">
+      <text>常用电话号码</text>
+    </view>
+    <view class="PhoneListContainer">
+        <view class="PhoneTab">
+                <view class="PhoneList" wx:for="{{PhoneList}}">
+                  <view class="Name">
+                    <text decode="true">{{item.Name}}&nbsp;</text>
+                  </view>
+                  <view class="PhoneNub">
+                    <text decode="true">{{item.PhoneNub}}</text>
+                  </view>
+                  <view class="MakeCall" data-PhoneNub="{{item.PhoneNub}}" catchtap="FreeCall" >
+                    <image src="../../images/IconLable/MakeCall.png"></image>
+                  </view>
+                </view>
+        </view>
+    </view>
+    <view class="PhoneBookComment">
+      评论区
+    </view>
+</template>

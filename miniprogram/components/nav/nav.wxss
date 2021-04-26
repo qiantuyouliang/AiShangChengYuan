@@ -1,0 +1,33 @@
+/* components/nav.wxss */
+.nav-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height:128rpx;
+  background-color: #F6F6F6;
+  width: 750rpx;
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  width: 100%;
+  background-color:#F6F6F6 ;
+  height: 88rpx;
+}
+
+.back  {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 88px;
+  height: 88rpx;
+  
+}
+
+.back  image{
+  padding-left:20rpx;
+  padding-top: 24rpx;
+  height: 56rpx;
+  width:  56rpx;
+}

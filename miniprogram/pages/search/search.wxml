@@ -1,0 +1,22 @@
+<!--pages/search/search.wxml-->
+<nav bgColor="black" Mainpage="0" >
+    <view slot="content">
+      <view class='Navtxt'>二手市场</view>
+    </view>
+</nav>
+<view class="searchGroup" style="background-color:#fff">
+      <icon type="search" class="searchIcon" size="40rpx"></icon>
+      <input class="searchInput" confirm-type="search" placeholder="搜索" value="{{SearchValue}}" bindconfirm="OnSearchEvent"></input>
+      <icon type="clear" class="clearIcon" size="40rpx" bind:tap="onClearEvent"></icon>
+</view>
+<view class="ItemListGroup">
+  <navigator class="ItemList" wx:for="{{searchResult}}" url="../ForumDetail/ForumDetail?Title={{item.Title}}&Content={{item.Content}}&Price={{item.Price}}&avatarUrl={{item.Author.avatarUrl}}&nickName={{item.Author.nickName}}&Images={{item.Images}}&ForumCreatorOpenId={{item.OpenID}}" >
+    <image class="ItemImage" src="{{item.ImageList[0]}}"></image>
+    <view class="GoodsTitle">{{item.Title}}</view>
+    <view class="forumInfo">
+      <view class="price">{{item.Price}}</view>
+      <view class="PubTime">{{item.PubTime}}</view> 
+    </view>   
+  </navigator>
+  
+</view>

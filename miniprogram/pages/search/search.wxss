@@ -1,0 +1,101 @@
+/* pages/search/search.wxss */
+.Navtxt{
+  text-align: center;
+  padding-top:20rpx;
+}
+.searchGroup{
+  width: 90%;
+  height: 70rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 20rpx;
+  margin: 10rpx auto;
+  padding: 2rpx 5rpx;
+  background-color: #ffff;
+  }
+  
+.searchIcon{
+  flex-basis: 40rpx
+ }
+
+.searchInput{
+min-height: 52rpx;
+height: 52rpx;
+font-size: 28rpx;
+flex: 1
+}
+  
+.clearIcon{
+flex-basis: 40rpx
+}
+
+.ItemListGroup{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16rpx 15rpx 0rpx 15rpx ;
+  display: flex;
+  justify-content: space-between;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+.ItemList{
+  width: 210rpx;
+  padding: 9rpx;
+}
+.ItemImage{
+  margin-top: 24rpx;
+  width:  210rpx;
+  height: 210rpx;
+  border-radius: 15rpx;
+}
+.forum .goodsInfo{
+  font-size: 36rpx;
+  font-weight: 700;
+}
+
+.forum .forumInfo{
+  display: flex;
+  justify-content: space-between;
+  padding: 2rpx 8rpx 8rpx 8rpx;
+  align-items: center;
+}
+
+.GoodsTitle{
+  font-family: 'SimHei';
+  font-size: 28rpx;
+}
+.forumInfo{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.price{
+  font-size: 24rpx;
+  font-weight: 700;
+  color: red;
+}
+.forumInfo .PubTime{
+  font-size: 18rpx;
+  color: #656565;
+  font-weight: 300;
+}
+.CreateInfo{
+  display: flex;
+  padding:5rpx ;
+  justify-content: center;
+  align-items: center;
+}
+
+.CreateInfo image{
+  width: 34rpx;
+  height: 34rpx;
+  border-radius: 50%;
+}
+
+.CreateInfo text{
+  font-size: 20rpx;
+  color: #656565;
+  font-weight: 500;
+  margin-right :6rpx; 
+}

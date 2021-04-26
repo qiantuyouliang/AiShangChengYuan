@@ -1,19 +1,45 @@
 <!--miniprogram/pages/CreateForum/CreateForum.wxml-->
-<view class="Container">
-  <form bindsubmit='OnSubmitEvent'>
-    <textarea name="Title" class="Title" placeholder="请输入标题"></textarea>
-    <textarea name="Price" class="Price" placeholder="输入价格¥"></textarea>
-    <textarea name="Content" class="Content" placeholder="请输入详细描述"></textarea>
-    <view class="ImageGroupList">
-      <view wx:for="{{TempImages}}" class="ImageGroup" style="width:{{imageSize}}px;height:{{imageSize}}px">
-        <image src='{{item}}' bindtap="OnImagePreview" data-index="{{index}}"></image>
+<nav bgColor="black" Mainpage="0" >
+    <view slot="content">
+      <view class='Navtxt'>发布信息</view>
+    </view>
+</nav>
+
+<view class="ContainerBoard" >
+  <view class="Container" >
+  <form bindsubmit='OnSubmitEventPaper'>
+    <view class="ForumTitle">
+        <textarea name="Title" class="Title" placeholder="请输入标题"></textarea>
+    </view>    
+    <view wx:if="{{ForumClass == 1 }}">
+        <textarea name="Price" class="Price" placeholder="请输入价格¥"></textarea>
+    </view>
+    <view class="ContentGroup" wx:for="{{ForumContent}}" wx:key="id"> 
+      <!-- 加载文字输入框 -->
+      <view class="ForumContent" wx:if="{{item.ContentType == 1}}">
+          <textarea name="{{index}}" class="Content" placeholder="请尽情发挥..."></textarea>
+      </view>
+      <!-- 添加图片后，加载图片框 -->
+      <view class="Content-TempImages" wx:elif="{{item.ContentType == 2}}">
+        <image  class="Content-TempImages" mode="aspectFit" src='{{item.Src}}' ></image>
         <view class="close-btn" bind:tap="OnRemoveImages" data-index="{{index}}"></view>
       </view>
-      <view wx:if="{{TempImages.length <9}}" class="add-image-btn" style="width:{{imageSize}}px;height:{{imageSize}}px" bind:tap="OnAddImageTap">
-        <view>+</view>
+      <view class="AddIconGroup">
+          <view class="TextAddIcon" bind:tap="OnAddTextTap2" data-idx="{{index}}">
+            <image src="cloud://cybbs-7goxgizj70ca5050.6379-cybbs-7goxgizj70ca5050-1304964552/IconTabble/文字添加.png"></image>
+            <text>添加文字</text>
+          </view>
+          <view class="ImageAddIcon" bind:tap="OnAddImageTap2" data-idx="{{index}}" >
+            <image src="cloud://cybbs-7goxgizj70ca5050.6379-cybbs-7goxgizj70ca5050-1304964552/IconTabble/图片添加.png" ></image>
+            <text>添加图片</text>
+          </view>
+          <view class="VideoAddIcon">
+            <image src="cloud://cybbs-7goxgizj70ca5050.6379-cybbs-7goxgizj70ca5050-1304964552/IconTabble/视频添加.png"></image>
+            <text>添加视频</text>
+          </view>
       </view>
     </view>
     <button  formType="submit" type="primary" class="SubmitButton">发布</button>
   </form>
-
+  </view>
 </view>
