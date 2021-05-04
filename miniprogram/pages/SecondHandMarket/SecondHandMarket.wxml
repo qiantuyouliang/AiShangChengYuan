@@ -37,4 +37,3 @@
 <view class="write-Forum-btn" bindtap="onWriterForum">
   <image src="cloud://cybbs-7goxgizj70ca5050.6379-cybbs-7goxgizj70ca5050-1304964552/IconTabble/发布.png" ></image>
 </view>
-

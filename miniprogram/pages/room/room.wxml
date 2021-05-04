@@ -3,15 +3,61 @@
       <view class='Navtxt'>聊天</view>
     </view>
 </nav>
-<view class="container" style="{{containerStyle}}">
-  <chatroom
-    style="width: 100%; height: 100%"
-    envId="{{chatRoomEnvId}}"
-    collection="{{chatRoomCollection}}"
-    chatRoomSubject="{{chatRoomSubject}}"
-    ForumCreatorOpenid="{{ForumCreatorOpenid}}"
-    SendUserInfo="{{SendUserInfo}}"
-    onGetUserInfo="{{onGetUserInfo}}"
-    getOpenID="{{getOpenID}}"
-  ></chatroom>
+<view class="container" style="height:{{screenHeight}}rpx"> 
+  <scroll-view scroll-y="true" class="scrollWindow" bindscrolltolower="scrollbot" >
+    <view class="MessageLists" wx:for="{{Messages}}">
+        <view wx:if="{{item._openid == SendUserInfo.openid}}" class="MessageList" style="padding-top: 30rpx;display: flex;flex-direction: row;width:100%;">
+          <view class="SendAvatar">
+            <image class="SendAvatar"  src="{{item.SendAvatar}}"></image>
+          </view>
+          <view class="SendContent" style="padding: 0rpx 15rpx 0rpx 15rpx;">
+            <view class="SendnickName" style="text-align:left;" >{{item.SendNickName}}</view>
+            <view class="Content" style="position: relative;text-align:left;">
+              <view class="ContentTxt" style="padding:10rpx;display:inline-block;border-radius: 10rpx;  background: #fff;">{{item.textContent}}</view>
+              <view class="triangle" style="left:-8rpx;top:0rpx;background: #fff;"></view>
+            </view>
+          </view>
+          <view class="ReceiveAvatar"></view>
+        </view>
+        <view wx:if="{{item._openid == RecieveUserInfo.openid}}" class="MessageList" style="padding-top: 30rpx;display: flex;flex-direction: row-reverse;width:100%;">
+          <view class="SendAvatar">
+            <image class="SendAvatar"  src="{{item.SendAvatar}}"></image>
+          </view>
+          <view class="SendContent" style="padding: 0rpx 15rpx 0rpx 15rpx;">
+            <view class="SendnickName" style="text-align:right;">{{item.SendNickName}}</view>
+            <view class="Content" style="position:relative;display:flex;justify-content: flex-end;">
+              <view class="ContentTxt" style="padding:10rpx;text-align:left;display:inline-block;border-radius: 10rpx;background:#b7e1f8" >{{item.textContent}}</view> 
+              <view class="triangle" style="right:-8rpx;top:0rpx;background:#b7e1f8"></view>
+              </view>
+          </view>
+          <view class="ReceiveAvatar"></view>
+        </view>
+    </view>
+  </scroll-view>
+  <!-- 消息 sender -->
+  <view class="footer">
+    <view class="message-sender" wx:if="{{!RecieveUserInfo}}">
+      <button 
+        bindtap="onGetUserInfo"
+        class="userinfo"
+      >请登录后参与聊天</button>
+    </view>
+    <view class="message-sender" wx:elif="{{RecieveUserInfo}}" >
+      <input 
+        class="text-input"
+        type="text"
+        confirm-type="send"
+        bindconfirm="onConfirmSendText"
+        cursor-spacing="20"
+        value="{{textInputValue}}"
+      ></input>
+
+      <image 
+        src="../../images/TestPic/photo.png" 
+        class="btn-send-image" 
+        mode="scaleToFill"
+        bindtap="onChooseImage"
+      ></image>
+    </view>
+  </view>
 </view>

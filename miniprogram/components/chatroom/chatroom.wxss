@@ -154,8 +154,10 @@ button {
 
 button.userinfo {
   background: darkturquoise;
+  height: 80rpx;
   color: aliceblue;
-  padding: 0 100rpx;
+  padding: 10rpx 20rpx 0rpx 20rpx;
+  font-size:34rpx ;
   border: 1px solid #ddd;
   border-radius: 20px;
 }

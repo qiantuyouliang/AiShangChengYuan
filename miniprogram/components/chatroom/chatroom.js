@@ -7,11 +7,11 @@ const app = getApp()
 
 Component({
   properties: {
-    envId: String,
-    collection: String,
-    chatRoomSubject: String,
+    RecieveUserInfo:Object,
     SendUserInfo:Object,
-    ForumCreatorOpenid: String,
+    chatRoomName: String,
+    collection: String,
+
     onGetUserInfo: {
       type: Function,
     },
@@ -50,23 +50,21 @@ Component({
     },
 
     async initRoom() {
-      console.log('initRoom初始化')
-      console.log('chatroom页面 ForumCreatorOpenid是'+this.properties.ForumCreatorOpenid)
+      
+
 
       //初始化历史聊天消息
-      this.try(async () => {
+      this.try(async() => {
 
         //获取聊天发起者的openid
-        await this.initOpenID()
-        console.log('chatroom页面 FirstOpenId是'+this.data.FirstOpenId)
+      
         const { envId, collection } = this.properties
         this.db = wx.cloud.database({
           env: envId,
         })
-        //生成会话双方的唯一标记名 groupName
-        this.data.groupName.push(this.properties.ForumCreatorOpenid,this.data.FirstOpenId)
-        console.log("本次会话组标记名为")
-        console.log(this.data.groupName)
+        //生成会话双方的唯一标记名 chatRoomName
+        var groupName = 'abc'
+
         const db = this.db
         const _ = db.command
         const { data: initList } = await db.collection(collection).where({
@@ -99,6 +97,8 @@ Component({
       }, '初始化FirstOpenId 失败')
     },
 
+
+    //监听云数据库更新事件
     async initWatch(criteria) {
       this.try(() => {
         const { collection } = this.properties
@@ -127,7 +127,7 @@ Component({
     },
 
 
-    //没看懂！！！！！！！！
+    //数据库更新事件
     onRealtimeMessageSnapshot(snapshot) {
       console.warn(`收到消息`, snapshot)
 

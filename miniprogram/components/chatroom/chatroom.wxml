@@ -58,7 +58,7 @@
       <button 
         bindtap="onGetUserInfo"
         class="userinfo"
-      >请先登录后参与聊天</button>
+      >请登录后参与聊天</button>
     </view>
     <view class="message-sender" wx:elif="{{SendUserInfo}}" >
       <input 

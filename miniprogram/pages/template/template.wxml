@@ -41,8 +41,8 @@
               </view>
           </view>
           <view wx:if="{{ImageList.length <3 && ImageList.length > 0}}" class="ImgTxtContent">
-            <view class="ImgTxtContent-left">
-                <view class="TitleGroup">
+            <view class="ImgTxtContent-left" style="width:65%;">
+                <view class="TitleGroup" >
                         <view class="ForumTitle">{{Title}}</view>
                         <view class="Price" wx:if="{{Price}}">
                             <text decode="true" >¥&nbsp;{{Price}}</text>  
@@ -54,8 +54,8 @@
                 <image mode="aspectFill"  src="{{ImageList[0]}}"></image>
             </view>
           </view>   
-          <view wx:elif="{{ImageList.length==0}}" class="TxtContent">
-            <view class="TitleGroup">
+          <view wx:elif="{{ImageList.length==0}}" class="TxtContent" >
+            <view class="TitleGroup" style="width:100%">
                 <view class="ForumTitle">{{Title}}</view>
                 <view class="Price" wx:if="{{Price}}">
                     <text decode="true" >¥&nbsp;{{Price}}</text>  

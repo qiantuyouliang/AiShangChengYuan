@@ -1,2 +1,31 @@
 <!--miniprogram/pages/Messages/Messages.wxml-->
-<view class="Container">即时通信页面</view>
+<nav bgColor="black" Mainpage="0" >
+    <view slot="content">
+      <view class='Navtxt'>聊天</view>
+    </view>
+</nav>
+<view class="Container">消息列表页面</view>
+<navigator class="MessageLists" url="../room/room?MessageOne=[1,2,3]" >  
+  <image class="MessageLists-Left" src="../../images/TestPic/header.jpg" ></image>
+  <view class="MessageLists-Right">
+      <view class="MessageLists-Right-Header">
+        <view class="MessageOneNickname">我叫MK</view>
+        <view class="MessageLastTime">下午3:20</view>
+      </view>
+      <view class="MessageLists-Right-Content">
+        下午出去玩啊
+      </view>
+  </view>
+</navigator >
+<navigator class="MessageLists" url="../room/room?MessageOne=[4,5,6]">
+  <image class="MessageLists-Left" src="../../images/TestPic/UserHeader.jpeg" ></image>
+  <view class="MessageLists-Right">
+      <view class="MessageLists-Right-Header">
+        <view class="MessageOneNickname">Titan</view>
+        <view class="MessageLastTime">下午3:20</view>
+      </view>
+      <view class="MessageLists-Right-Content">
+        太累了啊
+      </view>
+  </view>
+</navigator>

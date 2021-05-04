@@ -37,9 +37,7 @@ App({
   TimeFormat:function(options){
     var that = this
     var date = options;
-    // that.setData({
-    //   date:date
-    // })
+    console.log(date)
     var date_seconds = date.getTime()/1000;
     var now = new Date();
     var now_seconds = now.getTime()/1000;

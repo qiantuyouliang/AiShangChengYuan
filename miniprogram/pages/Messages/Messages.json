@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "chatroom": "/components/chatroom/chatroom",
+    "nav":"../../components/nav/nav"
+  }
 }

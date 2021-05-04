@@ -62,6 +62,8 @@ exports.main = async (event, context) => {
         OpenID:OpenID,
       }
     })
+    //帖子状态信息初始化
+
   }else{
     return {"errcode":1,"errmsg":"您的内容有风险！ "}
   }

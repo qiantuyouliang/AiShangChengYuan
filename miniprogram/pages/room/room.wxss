@@ -4,12 +4,94 @@
 }
 
 .container {
-  height: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding-top: 80rpx;
-  padding-bottom: 30rpx;
+  width: 100%;
+  position: relative;
 }
+.scrollWindow{
+  box-sizing: border-box;
+  padding: 20rpx 20rpx 20rpx 20rpx;
+  
+}
+
+.SendAvatar {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 10rpx;
+}
+
+.SendnickName{
+  font-size: 24rpx;
+  color: #656565;
+}
+.SendContent{
+  width:445rpx;
+}
+.ReceiveAvatar{
+  width:120rpx;
+  height: 100rpx;
+}
+
+.Content{
+  box-sizing: border-box;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  flex:1;
+  
+}
+.triangle {
+  width: 20rpx;
+  height: 20rpx;
+  margin-top: 26rpx;
+  transform: rotate(45deg);
+  position: absolute;  
+}
+.footer {
+  box-sizing: border-box;
+  height: 90rpx;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid #ddd;
+  font-size: 10rpx;
+  padding:20rpx 20rpx  20rpx 30rpx;
+  background: rgb(246,246,246);
+}
+
+.footer .message-sender {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.message-sender .text-input {
+  flex: 1;
+  font-size: 16px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 3px 6px;
+  margin: 0 10px 0 5px;
+  background: #fff;
+}
+
+.message-sender .btn-send-image {
+  width: 50rpx;
+  height: 50rpx;
+  align-self: center;
+}
+
+button {
+  font-size: 30rpx;
+}
+
+button.userinfo {
+  background: darkturquoise;
+  height: 80rpx;
+  color: aliceblue;
+  padding: 10rpx 20rpx 0rpx 20rpx;
+  font-size:34rpx ;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+}
+

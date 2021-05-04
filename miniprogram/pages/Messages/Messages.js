@@ -21,7 +21,6 @@ Page({
       });
     }
     app.globalData.ForumCreatorOpenId = ''
-    console.log(Chat1);
   },
 
   /**

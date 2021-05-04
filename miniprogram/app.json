@@ -1,19 +1,18 @@
 {
   "pages": [
-
+ 
+    "pages/room/room",
+    "pages/Messages/Messages",
     "pages/index/index",
     "pages/CreateForum/CreateForum",
     "pages/Square/Square",
     "pages/ForumDetail/ForumDetail",
-
     "pages/CommentInput/CommentInput",
     "pages/SecondHandMarket/SecondHandMarket",
     "pages/search/search",
     "pages/Sports/Sports",
     "pages/login/login",
-    "pages/room/room",
     "pages/template/template",
-    "pages/Messages/Messages",
     "pages/me/me",
     "pages/signup/signup"
 

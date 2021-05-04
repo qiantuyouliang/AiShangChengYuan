@@ -43,10 +43,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-
+    console.log(app.globalData.screenHeight)
+    this.setData({
+      clientHeight :app.globalData.screenHeight
+    })
+  console.log('clientHeight高度'+ this.data.clientHeight)
   },
-  
 /**
    * 生命周期函数--监听页面显示
    */
@@ -73,7 +75,14 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.LoadForum(this.data.Forums.length);
+  
+  },
+
+//页面滑动到底部
+scrollbot:function(){
+
+  this.LoadForum(this.data.Forums.length);   
+
   },
 
 //当前页面发布内容  
@@ -114,9 +123,9 @@ onWriterForum:function(event){
         currentData: e.target.dataset.current
       })
     }
-    console.log('显示帖子板块切换到' + this.data.ForumClassName[this.data.currentData])
+    console.log('显示的板块切换到' + this.data.ForumClassName[this.data.currentData])
     if(this.data.ForumClassName[this.data.currentData]!= 'PhoneBook'){
-        this.LoadForum();
+      this.LoadForum();
     }
   },
 
@@ -134,18 +143,24 @@ onWriterForum:function(event){
 
 //帖子加载
   LoadForum:function(start=0){
+    console.log('开始一次加载Forums')
     const that = this;
     const ForumClassName = this.data.ForumClassName[this.data.currentData];
     let promise = db.collection(ForumClassName);
     if(start > 0){
       promise = promise.skip(start);
+      console.log('执行一次跳过历史Forums')
     }
      promise.limit(6).orderBy("PubTime","desc").get().then(res =>{
       const Forums = res.data;
+      console.log('抽一次取Forum数据')
       console.log(Forums)
+
       Forums.forEach(item => {
         item.PubTime = app.TimeFormat(item.PubTime)
       });
+      //假设还有数据
+
       let hasmore = true;
       if(Forums.length == 0){
         hasmore = false;
