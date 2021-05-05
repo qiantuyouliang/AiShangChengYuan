@@ -12,7 +12,7 @@ Page({
     ForumCreatorOpenid: '',
     screenHeight:'',
     Messages:null,
-
+    chats:[],
     // functions for used in chatroom components
     onGetUserInfo:null,
     getOpenID: null,
@@ -57,7 +57,11 @@ Page({
 //历史消息初始化
      await this.LoadMessage();
      console.log(this.data.Messages)
-    //    this.initWatch()
+//下拉到底部
+
+
+//监听消息    
+    this.initWatch()
    
     
   },
@@ -92,7 +96,10 @@ Page({
     }
    await promise.limit(10).where({ChatGroupName:ChatGroupName}).orderBy("PubTime","desc").get().then(res =>{
       const Messages = res.data;
-      
+      console.log(Messages)
+      Messages.forEach(item => {
+        item.sendTime = app.TimeFormat(item.sendTime)
+      });
       let hasmore = true;
       if(Messages.length == 0){
         hasmore = false;
@@ -103,10 +110,8 @@ Page({
       }else{
         NewMessages = Messages;
       }
-      NewMessages.forEach(item => {
-        item.sendTime = app.TimeFormat(item.sendTime)
-      });
 
+      console.log(NewMessages)
       this.setData({
         Messages : NewMessages,
         hasmore: hasmore
@@ -122,8 +127,8 @@ Page({
       const _= wx.cloud.database.command;
       console.warn(`开始监听`, criteria)
       this.messageListener = db.collection(collection).where({
-        ChatGroupName: this.onRealtimeMessageSnapshot.bind(this),
-        // onChange: this.onRealtimeMessageSnapshot.bind(this),
+        ChatGroupName: this.ChatGroupName}).watch({
+          onChange: this.onRealtimeMessageSnapshot.bind(this),
           onError: e => {
             if (!this.inited || this.fatalRebuildCount >= FATAL_REBUILD_TOLERANCE) {
               this.showError(this.inited ? '监听错误，已断开' : '初始化监听失败', e, '重连', () => {
@@ -148,25 +153,25 @@ Page({
 //消息数据库更新事件
   onRealtimeMessageSnapshot:function(snapshot) {
     console.warn(`收到消息`, snapshot)
-
-    if (snapshot.type === 'init') {
+    if (snapshot.type === 'init') {  //如果是第一次打开页面
       this.setData({
         chats: [
           ...this.data.chats,
           ...[...snapshot.docs].sort((x, y) => x.sendTimeTS - y.sendTimeTS),
         ],
       })
-      this.scrollToBottom()
+      // this.scrollToBottom()
       this.inited = true
-    } else {
+    } else {                  //页面中收到消息
       let hasNewMessage = false
       let hasOthersMessage = false
+      console.log('页面中收到消息')
       const chats = [...this.data.chats]
       for (const docChange of snapshot.docChanges) {
         switch (docChange.queueType) {
           case 'enqueue': {
-            hasOthersMessage = docChange.doc._FirstOpenId !== this.data.FirstOpenId
-            const ind = chats.findIndex(chat => chat._id === docChange.doc._id)
+            hasOthersMessage = docChange.doc.Sendopenid !== this.data.RecieveUserInfo.openid //如果是对方发过来的信息
+            const ind = chats.findIndex(chat => chat._id === docChange.doc._id) //找到上次调取的聊天消息的位置
             if (ind > -1) {
               if (chats[ind].msgType === 'image' && chats[ind].tempFilePath) {
                 chats.splice(ind, 1, {
@@ -183,10 +188,10 @@ Page({
         }
       }
       this.setData({
-        chats: chats.sort((x, y) => x.sendTimeTS - y.sendTimeTS),
+        chats: chats.sort((x, y) => x.sendTimeTS - y.sendTimeTS),  //sendTimeTS从小到大排序
       })
       if (hasOthersMessage || hasNewMessage) {
-        this.scrollToBottom()
+        // this.scrollToBottom()
       }
     }
   },
@@ -209,7 +214,6 @@ Page({
         sendTime: new Date(),
         sendTimeTS: Date.now(), // fallback
       }
-
       // this.scrollToBottom(true)
       console.log('开始将文字包装')
       await db.collection('ChatMessage').add({
@@ -292,7 +296,11 @@ Page({
       urls: [e.target.dataset.fileid],
     })
   },
-
+//
+  scrollbot(){
+    console.log('滑动到scrol窗口')
+    this.LoadMessage(this.data.Messages.length)
+},
 //窗口滑动到底部
   scrollToBottom(force) {
     if (force) {

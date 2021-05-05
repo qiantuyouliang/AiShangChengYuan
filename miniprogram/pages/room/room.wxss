@@ -10,6 +10,7 @@
 .scrollWindow{
   box-sizing: border-box;
   padding: 20rpx 20rpx 20rpx 20rpx;
+  height: 1300rpx;
   
 }
 
